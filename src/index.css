@@ -1,92 +1,83 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 47% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 222 47% 30%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 214 32% 91%;
+    --accent-foreground: 222 47% 10%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 10%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --game-x: 210 100% 64%;
+    --game-o: 340 82% 60%;
+    --game-board: 220 13% 94%;
+    --game-cell: 0 0% 100%;
+    --game-hover: 210 40% 96%;
+    --game-win: 142 76% 46%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 47% 7%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222 47% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 47% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 40% 80%;
+    --primary-foreground: 222 47% 10%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 213 27% 84%;
+
+    --game-x: 210 100% 74%;
+    --game-o: 340 82% 70%;
+    --game-board: 220 13% 16%;
+    --game-cell: 222 47% 10%;
+    --game-hover: 217 33% 17%;
+    --game-win: 142 76% 56%;
   }
 }
 
@@ -96,6 +87,46 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .game-cell {
+    @apply relative flex items-center justify-center bg-game-cell rounded-lg shadow-cell 
+      transition-all duration-300 overflow-hidden cursor-pointer hover:shadow-cell-hover;
+  }
+  
+  .game-cell::before {
+    @apply content-[''] absolute inset-0 bg-game-hover opacity-0 transition-opacity duration-300;
+  }
+  
+  .game-cell:hover::before {
+    @apply opacity-100;
+  }
+  
+  .game-mark {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-4xl md:text-6xl font-bold animate-mark-in;
+  }
+  
+  .game-board-grid {
+    @apply grid grid-cols-3 gap-3 md:gap-4 w-full max-w-[350px] md:max-w-[450px] mx-auto;
+  }
+  
+  .player-card {
+    @apply flex flex-col items-center p-4 rounded-xl bg-card/80 backdrop-blur-sm transition-all duration-300 shadow-sm;
+  }
+  
+  .player-card.active {
+    @apply ring-2 ring-primary shadow-player-active;
+  }
+  
+  .floating-card {
+    @apply transition-all duration-700 hover:translate-y-[-5px];
+  }
+  
+  .winning-cell {
+    @apply bg-game-win/20 animate-winner-pulse;
   }
 }
