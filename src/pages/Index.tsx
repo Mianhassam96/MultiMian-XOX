@@ -7,6 +7,7 @@ import GameControls from "@/components/GameControls";
 import GameStats from "@/components/GameStats";
 import GameHistory from "@/components/GameHistory";
 import ConfettiEffect from "@/components/ConfettiEffect";
+import Footer from "@/components/Footer";
 import { showGameStatusToast, getStatusMessage } from "@/utils/gameUtils";
 import { motion } from "framer-motion";
 
@@ -58,7 +59,7 @@ const Index = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Tic Tac Toe
+        MultiMian XOX
       </motion.h1>
       
       <motion.div
@@ -130,6 +131,8 @@ const Index = () => {
           oName={playerNames.O}
         />
       </div>
+      
+      <Footer />
     </div>
   );
 };
