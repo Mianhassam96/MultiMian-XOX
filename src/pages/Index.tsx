@@ -50,11 +50,11 @@ const Index = () => {
   }, [gameStatus, prevGameStatus, winner, playerNames]);
 
   return (
-    <div className="min-h-screen w-full bg-background flex flex-col items-center justify-start py-8 px-4 overflow-hidden">
+    <div className="min-h-screen w-full bg-background flex flex-col items-center justify-start py-8 px-4 pb-16 overflow-hidden">
       <ConfettiEffect active={showConfetti} />
       
       <motion.h1 
-        className="text-3xl md:text-4xl font-bold mb-2 tracking-tight"
+        className="text-3xl md:text-4xl font-bold mb-2 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-x/90 to-game-o/90"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
